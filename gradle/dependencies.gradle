@@ -1,0 +1,20 @@
+ext {
+    commonVersions = [
+            groovy: "2.4.12",
+            kafka: "1.1.0",
+            jackson: "2.9.6",
+            objenesis: "1.2",
+            spock: "1.0-groovy-2.4"
+    ]
+
+    commonDependencies = [
+            groovy: "org.codehaus.groovy:groovy-all:${commonVersions.groovy}",
+            kafkaClients: "org.apache.kafka:kafka-clients:${commonVersions.kafka}",
+            kafkaStreams: "org.apache.kafka:kafka-streams:${commonVersions.kafka}",
+            jackson: "com.fasterxml.jackson.core:jackson-databind:${commonVersions.jackson}",
+            objenesis: "org.objenesis:objenesis:${commonVersions.objenesis}",
+            spock: dependencies.create("org.spockframework:spock-core:${commonVersions.spock}", {
+                exclude group: "org.codehaus.groovy", module: "groovy-all"
+            })
+    ]
+}

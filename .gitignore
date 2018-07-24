@@ -1,0 +1,28 @@
+/docs/public
+/docs/generated-snippets
+/scripts
+build/
+.gradle
+.gradletasknamecache
+generated.build.info*.json
+caches/
+native/
+**/out/
+/logs/
+
+# intellij
+/out/
+config/out/
+docker-local
+gam/out/
+.idea
+.shelf
+*.iml
+*.ipr
+*.iws
+*.log
+*.log.gz
+/classes/
+
+# mac
+.DS_Store

@@ -1,0 +1,12 @@
+include 'interactive-queries', 'kafka-producers', 'kafka-streams', 'data-model'
+
+rootProject.name = 'gr8confus-2018-kafka-streams-demos'
+
+def setBuildFile(project) {
+    project.buildFileName = "${project.name}.gradle"
+    project.children.each {
+        setBuildFile(it)
+    }
+}
+
+setBuildFile(rootProject)

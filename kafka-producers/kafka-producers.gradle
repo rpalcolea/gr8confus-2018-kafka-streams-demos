@@ -1,0 +1,17 @@
+plugins {
+    id 'groovy'
+}
+
+dependencies {
+    implementation project(":data-model")
+    implementation 'org.codehaus.gpars:gpars:1.2.1'
+    implementation 'io.github.benas:random-beans:3.7.0'
+    implementation commonDependencies.groovy
+    implementation commonDependencies.jackson
+    implementation commonDependencies.kafkaClients
+}
+
+task execute(type:JavaExec) {
+    main = project.hasProperty("mainClass") ? project.getProperty("mainClass") : "io.perezalcolea.kafkastreams.BookKafkaProducerDemo"
+    classpath = sourceSets.main.runtimeClasspath
+}

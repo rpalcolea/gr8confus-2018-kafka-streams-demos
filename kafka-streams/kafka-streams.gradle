@@ -1,0 +1,15 @@
+plugins {
+    id 'groovy'
+}
+
+dependencies {
+    implementation project(":data-model")
+    implementation commonDependencies.groovy
+    implementation commonDependencies.jackson
+    implementation commonDependencies.kafkaStreams
+}
+
+task execute(type:JavaExec) {
+    main = project.hasProperty("mainClass") ? project.getProperty("mainClass") : "io.perezalcolea.kafkastreams.BookKafkaProducerDemo"
+    classpath = sourceSets.main.runtimeClasspath
+}

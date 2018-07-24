@@ -1,0 +1,15 @@
+subprojects {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    group = 'io.perezalcolea.kafkastreams'
+
+    apply from: "$rootDir/gradle/dependencies.gradle"
+}
