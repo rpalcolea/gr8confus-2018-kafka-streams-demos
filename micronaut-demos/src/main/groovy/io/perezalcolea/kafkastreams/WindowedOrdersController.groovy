@@ -1,6 +1,5 @@
 package io.perezalcolea.kafkastreams
 
-import groovy.transform.CompileStatic
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
@@ -15,7 +14,6 @@ import org.apache.kafka.streams.state.ReadOnlyWindowStore
 
 import static io.micronaut.http.HttpResponse.ok
 
-@CompileStatic
 @Controller("/")
 class WindowedOrdersController {
 
@@ -30,12 +28,10 @@ class WindowedOrdersController {
     HttpResponse<List<Map<String, Long>>> latestOrders() {
         long timeFrom = System.currentTimeMillis() - 60_000L
         long timeTo = System.currentTimeMillis()
-        List<Map<String, Long>> orders = []
         ReadOnlyWindowStore<String, Long> windowStore = kafkaStreams.store("orders-windowed-store", QueryableStoreTypes.windowStore())
         KeyValueIterator<Windowed<String>, Long> iterator = windowStore.fetchAll(timeFrom, timeTo)
-        while(iterator.hasNext()) {
-            KeyValue<Windowed<String>, Long> next = iterator.next()
-            orders.add([(next.key.key()): next.value])
+        List<Map<String, Long>> orders = iterator.collect { KeyValue<Windowed<String>, Long> keyValue ->
+            [(keyValue.key.key()): keyValue.value]
         }
         return ok(orders)
     }
