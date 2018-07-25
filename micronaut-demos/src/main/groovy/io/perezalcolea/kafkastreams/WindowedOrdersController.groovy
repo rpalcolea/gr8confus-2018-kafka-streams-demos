@@ -6,8 +6,12 @@ import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 import io.micronaut.http.annotation.Produces
-
-import javax.inject.Inject
+import org.apache.kafka.streams.KafkaStreams
+import org.apache.kafka.streams.KeyValue
+import org.apache.kafka.streams.kstream.Windowed
+import org.apache.kafka.streams.state.KeyValueIterator
+import org.apache.kafka.streams.state.QueryableStoreTypes
+import org.apache.kafka.streams.state.ReadOnlyWindowStore
 
 import static io.micronaut.http.HttpResponse.ok
 
@@ -15,10 +19,10 @@ import static io.micronaut.http.HttpResponse.ok
 @Controller("/")
 class WindowedOrdersController {
 
-    private final WindowedOrdersService windowedOrdersService
+    private final KafkaStreams kafkaStreams
 
-    WindowedOrdersController(WindowedOrdersService windowedOrdersService) {
-        this.windowedOrdersService = windowedOrdersService
+    WindowedOrdersController(KafkaStreams kafkaStreams) {
+        this.kafkaStreams = kafkaStreams
     }
 
     @Get("/orders/latest")
@@ -26,7 +30,13 @@ class WindowedOrdersController {
     HttpResponse<List<Map<String, Long>>> latestOrders() {
         long timeFrom = System.currentTimeMillis() - 60_000L
         long timeTo = System.currentTimeMillis()
-        List<Map<String, Long>> orders = windowedOrdersService.findLatestOrders(timeFrom, timeTo)
+        List<Map<String, Long>> orders = []
+        ReadOnlyWindowStore<String, Long> windowStore = kafkaStreams.store("orders-windowed-store", QueryableStoreTypes.windowStore())
+        KeyValueIterator<Windowed<String>, Long> iterator = windowStore.fetchAll(timeFrom, timeTo)
+        while(iterator.hasNext()) {
+            KeyValue<Windowed<String>, Long> next = iterator.next()
+            orders.add([(next.key.key()): next.value])
+        }
         return ok(orders)
     }
 }
