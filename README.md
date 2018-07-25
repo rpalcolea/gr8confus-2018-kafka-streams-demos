@@ -198,6 +198,29 @@ curl "http://localhost:8080/orders/latest"
 
 * Note: You need to run the orders producer multiple times in order to see new orders coming. This is expected since we are doing a 1 minute window.
 
+## Kafka Streams - Interactive Queries - Micronaut
+
+Micronaut is a modern, JVM-based, full stack microservices framework designed for building modular, easily testable microservice applications.
+
+Micronaut is developed by the creators of the Grails framework and takes inspiration from lessons learnt over the years building real-world applications from monoliths to microservices using Spring, Spring Boot and Grails.
+
+### Executing the app
+
+```
+./gradlew :micronaut-demos:bootRun
+```
+
+### Retrieving data
+
+#### Latest Orders (1 minute)
+
+```
+curl "http://localhost:8080/orders/latest"
+```
+
+* Note: You need to run the orders producer multiple times in order to see new orders coming. This is expected since we are doing a 1 minute window.
+
+
 # Useful links
 
 [https://docs.confluent.io/current/streams/index.html](https://docs.confluent.io/current/streams/index.html)

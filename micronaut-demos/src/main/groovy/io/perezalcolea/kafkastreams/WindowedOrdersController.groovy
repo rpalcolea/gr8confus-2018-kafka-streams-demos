@@ -9,7 +9,6 @@ import io.micronaut.http.annotation.Produces
 
 import javax.inject.Inject
 
-import static io.micronaut.http.HttpResponse.notFound
 import static io.micronaut.http.HttpResponse.ok
 
 @CompileStatic
@@ -25,10 +24,6 @@ class WindowedOrdersController {
         long timeFrom = System.currentTimeMillis() - 60_000L
         long timeTo = System.currentTimeMillis()
         List<Map<String, Long>> orders = windowedOrdersService.findLatestOrders(timeFrom, timeTo)
-        if(!orders) {
-            return notFound()
-        }
-
         return ok(orders)
     }
 }

@@ -2,7 +2,8 @@
 micronaut:
   application:
     name: kafka-streams-micronaut
-
+  server:
+    port: 8080
 ---
 kafka:
   bootstrap:
