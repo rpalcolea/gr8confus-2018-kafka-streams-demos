@@ -207,7 +207,7 @@ Micronaut is developed by the creators of the Grails framework and takes inspira
 ### Executing the app
 
 ```
-./gradlew :micronaut-demos:bootRun
+./gradlew :micronaut-demos:run
 ```
 
 ### Retrieving data
