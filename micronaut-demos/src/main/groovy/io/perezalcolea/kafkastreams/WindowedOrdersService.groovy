@@ -18,8 +18,11 @@ import javax.inject.Singleton
 @Singleton
 class WindowedOrdersService {
 
-    @Inject
-    KafkaStreams kafkaStreams
+    private final KafkaStreams kafkaStreams
+
+    WindowedOrdersService(KafkaStreams kafkaStreams) {
+        this.kafkaStreams = kafkaStreams
+    }
 
     List<Map<String, Long>> findLatestOrders(Long timeFrom, Long timeTo) {
         List<Map<String, Long>> results = []

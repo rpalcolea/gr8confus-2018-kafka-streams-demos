@@ -15,8 +15,11 @@ import static io.micronaut.http.HttpResponse.ok
 @Controller("/")
 class WindowedOrdersController {
 
-    @Inject
-    WindowedOrdersService windowedOrdersService
+    private final WindowedOrdersService windowedOrdersService
+
+    WindowedOrdersController(WindowedOrdersService windowedOrdersService) {
+        this.windowedOrdersService = windowedOrdersService
+    }
 
     @Get("/orders/latest")
     @Produces(MediaType.APPLICATION_JSON)
