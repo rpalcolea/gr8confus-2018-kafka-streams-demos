@@ -1,4 +1,4 @@
-include 'interactive-queries', 'kafka-producers', 'kafka-streams', 'data-model'
+include 'interactive-queries', 'micronaut-demos', 'kafka-producers', 'kafka-streams', 'data-model'
 
 rootProject.name = 'gr8confus-2018-kafka-streams-demos'
 
